@@ -249,6 +249,7 @@ class _SugestaoFilmesState extends State<SugestaoFilmes> {
             builder: (context) => DetalheFilme(
               idFilme: filme.idFilme,
               titulo: filme.titulo,
+              trailer: filme.trailer,
               imagem: filme.imagem,
               descricao: filme.descricao,
               nota: filme.nota.toString(),

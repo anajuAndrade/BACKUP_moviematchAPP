@@ -10,10 +10,12 @@ import '../../../config/sessaoUsuario.dart';
 import '../login/semLogin.dart';
 import '../../../service/usuarioService.dart';
 import '../../../service/listaService.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetalheFilme extends StatefulWidget {
   final int idFilme;
   final String titulo;
+  final String? trailer;
   final String imagem;
   final String descricao;
   final String nota;
@@ -27,6 +29,7 @@ class DetalheFilme extends StatefulWidget {
     super.key,
     required this.idFilme,
     required this.titulo,
+    this.trailer,
     required this.imagem,
     required this.descricao,
     required this.nota,
@@ -48,6 +51,7 @@ class _DetalheFilmeState extends State<DetalheFilme> {
   final TextEditingController controllerLista = TextEditingController();
   final UsuarioService usuarioService = UsuarioService();
   final ListaService listaService = ListaService();
+  YoutubePlayerController? _trailerController;
 
   List<Lista> listas = [];
   bool mostrarCampo = false;
@@ -61,6 +65,29 @@ class _DetalheFilmeState extends State<DetalheFilme> {
     super.initState();
     verificarCurtida();
     carregarListas();
+
+    final url = widget.trailer?.trim();
+    
+    if (url != null && url.isNotEmpty) {
+        final videoId = YoutubePlayer.convertUrlToId(url);
+
+        if (videoId != null && videoId.isNotEmpty) {
+            _trailerController = YoutubePlayerController(
+            initialVideoId: videoId,
+            flags: const YoutubePlayerFlags(
+              autoPlay: false,
+              mute: false,
+            ),
+          );
+        }
+      }
+  }
+
+  @override
+  void dispose(){
+    _trailerController?.dispose();
+    controllerLista.dispose();
+    super.dispose();
   }
 
   Future<void> carregarListas() async {
@@ -217,6 +244,40 @@ class _DetalheFilmeState extends State<DetalheFilme> {
                         ],
                       ),
                     ),
+
+                    if (_trailerController != null) ...[
+                      const SizedBox(height: 20),
+
+                        const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Trailer',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                      const SizedBox(height: 10),
+
+                      Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: YoutubePlayer(
+                              controller: _trailerController!,
+                              showVideoProgressIndicator: true,
+                              ),
+                            ),
+                          ),
+                      ],
 
                     const SizedBox(height: 15),
 

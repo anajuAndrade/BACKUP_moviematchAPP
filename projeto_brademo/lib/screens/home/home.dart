@@ -230,6 +230,7 @@ class HomeState extends State<Home> {
                                     filme: {
                                       "idFilme": filme.idFilme,
                                       "titulo": filme.titulo,
+                                      "trailer": filme.trailer,
                                       "imagem": filme.imagem,
                                       "descricao": filme.descricao,
                                       "nota": filme.nota.toString(),
@@ -261,6 +262,7 @@ class HomeState extends State<Home> {
                                       filme: {
                                         "idFilme": filme.idFilme,
                                         "titulo": filme.titulo,
+                                        "trailer": filme.trailer,
                                         "imagem": filme.imagem,
                                         "descricao": filme.descricao,
                                         "nota": filme.nota.toString(),

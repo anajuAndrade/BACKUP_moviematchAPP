@@ -16,12 +16,14 @@ class _AddFilmeState extends State<AddFilme> {
   final duracaoController = TextEditingController();
   final diretorController = TextEditingController();
   final streamingController = TextEditingController();
+  final trailerController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     if (widget.filme != null) {
       tituloController.text = widget.filme!["titulo"] ?? "";
+      trailerController.text = widget.filme!["trailer"] ?? "";
       imagemController.text = widget.filme!["imagem"] ?? "";
       descricaoController.text = widget.filme!["descricao"] ?? "";
       notaController.text = widget.filme!["nota"] ?? "";
@@ -29,6 +31,20 @@ class _AddFilmeState extends State<AddFilme> {
       diretorController.text = widget.filme!["diretor"] ?? "";
       streamingController.text = widget.filme!["streaming"] ?? "";
     }
+  }
+
+  @override
+  void dispose() {
+    tituloController.dispose();
+    imagemController.dispose();
+    descricaoController.dispose();
+    notaController.dispose();
+    duracaoController.dispose();
+    diretorController.dispose();
+    streamingController.dispose();
+    trailerController.dispose();
+
+    super.dispose();
   }
 
   Widget campo({
@@ -71,6 +87,10 @@ class _AddFilmeState extends State<AddFilme> {
           children: [
             const SizedBox(height: 50),
             campo(texto: "Título", controller: tituloController),
+            campo(
+              texto: "URL do trailer no Youtube".
+              controller: trailerController,
+            )
             campo(texto: "URL da imagem", controller: imagemController),
             campo(
               texto: "Descrição",
@@ -89,6 +109,7 @@ class _AddFilmeState extends State<AddFilme> {
               onPressed: () {
                 final novoFilme = {
                   "titulo": tituloController.text,
+                  "trailer": trailerController.text,
                   "imagem": imagemController.text,
                   "descricao": descricaoController.text,
                   "nota": notaController.text,
