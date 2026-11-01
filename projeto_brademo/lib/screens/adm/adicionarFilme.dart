@@ -88,9 +88,9 @@ class _AddFilmeState extends State<AddFilme> {
             const SizedBox(height: 50),
             campo(texto: "Título", controller: tituloController),
             campo(
-              texto: "URL do trailer no Youtube".
+              texto: "URL do trailer no Youtube",
               controller: trailerController,
-            )
+            ),
             campo(texto: "URL da imagem", controller: imagemController),
             campo(
               texto: "Descrição",
