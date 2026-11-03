@@ -20,6 +20,7 @@ public class Filme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_filme;
     private String titulo_filme;
+    private String trailer_filme;
     private String descricao_filme;
     private String imagemDiretor_filme;
     private Integer duracao_filme;
